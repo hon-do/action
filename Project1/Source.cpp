@@ -1,4 +1,8 @@
+#include <stdio.h>
 #include "glut.h"
+
+int windowWidth = 1000;
+int windowHeight = 800;
 
 void display(void) {
 	//êFclear
@@ -33,6 +37,12 @@ void (timer)(int value) {
 //	glutPostRedisplay();
 //}
 
+void reshape(int width, int height) {
+	printf("reshape: width:%d height:%d\n", width, height);
+	windowWidth = width;
+	windowHeight = height;
+}
+
 int main(int argc, char* argv[]) {
 	glutInit(
 		&argc,// int *argcp
@@ -40,14 +50,14 @@ int main(int argc, char* argv[]) {
 	//doublebufferingÅ´
 	glutInitDisplayMode(GL_DOUBLE);// unsigned int mode
 	glutInitWindowPosition(640, 0);// int x, y
-	glutInitWindowSize(640, 640);// int width, height
+	glutInitWindowSize(windowWidth, windowHeight);// int width, height
 	glutCreateWindow("title");// const char *title
 	glutDisplayFunc(display);// void (GLUTCALLBACK *func)(void)
 	glutTimerFunc(
 		0,		// unsigned int millis
 		timer,	// void (GLUTCALLBACK *func)(int value)
 		0);		// int value
-
+	glutReshapeFunc(reshape);// void (GLUTCALLBACK *func)(int width, int height)
 	//glutIdleFunc(idle);// void (GLUTCALLBACK *func)(void)
 	glutMainLoop();
 }
