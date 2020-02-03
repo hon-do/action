@@ -7,11 +7,25 @@ int windowHeight = 800;
 void display(void) {
 	//êFclear
 	glClear(GL_COLOR_BUFFER_BIT);//GLbitfield mask
+
+	glMatrixMode(GL_PROJECTION);// GLenum mode
+	glLoadIdentity();
+	gluOrtho2D(0, windowWidth,// GLdouble left, GLdouble right,
+		windowHeight, 0);// GLdouble bottom,GLdouble top
+
+	glMatrixMode(GL_MODELVIEW);// GLenum mode
+	glLoadIdentity();
+
+	glTranslatef(windowWidth/2,windowHeight/2,1);// GLfloat x, GLfloat y, GLfloat z
+	static float angle;
+	angle += 1;
+
 	//âÒì]
 	glRotatef(
-		1,// GLfloat angle
+		angle,// GLfloat angle
 		0, 0, 1);// GLfloat x, GLfloat y, GLfloat z
 
+	glScalef(256,256,1);// GLfloat x, GLfloat y, GLfloat z
 	glutWireTeapot(1);// GLdouble size
 	glutSwapBuffers();// doublebufferÇÃêÿÇËë÷Ç¶
 }
@@ -39,6 +53,7 @@ void (timer)(int value) {
 
 void reshape(int width, int height) {
 	printf("reshape: width:%d height:%d\n", width, height);
+	glViewport(0, 0, width, height);// GLint x, GLint y, GLsizei width, GLsizei height
 	windowWidth = width;
 	windowHeight = height;
 }
